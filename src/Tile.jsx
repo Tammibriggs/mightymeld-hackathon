@@ -1,15 +1,18 @@
-export function Tile({ content: Content, flip, state }) {
+import { FaQuestion } from "react-icons/fa";
+
+export function Tile({ content: Content, flip, state, clicked }) {
   switch (state) {
     case "start":
       return (
         <Back
-          className="inline-block h-16 w-16 bg-indigo-300 text-center rounded-lg"
+          className="flex-1 bg-indigo-300 rounded-lg flex justify-center items-center text-white"
           flip={flip}
+          clicked={clicked}
         />
       );
     case "flipped":
       return (
-        <Front className="inline-block h-16 w-16 bg-indigo-500 rounded-lg text-white p-2">
+        <Front className="flex-1 bg-indigo-500 rounded-lg text-white p-2">
           <Content
             style={{
               display: "inline-block",
@@ -22,7 +25,7 @@ export function Tile({ content: Content, flip, state }) {
       );
     case "matched":
       return (
-        <Matched className="inline-block h-16 w-16 text-indigo-200 rounded-md p-2">
+        <Matched className="flex-1 text-indigo-200 rounded-md p-2">
           <Content
             style={{
               display: "inline-block",
@@ -38,8 +41,12 @@ export function Tile({ content: Content, flip, state }) {
   }
 }
 
-function Back({ className, flip }) {
-  return <div onClick={flip} className={className}></div>;
+function Back({ className, flip, clicked }) {
+  return (
+    <div onClick={flip} className={className}>
+      {!clicked && <FaQuestion size={35} />}
+    </div>
+  );
 }
 
 function Front({ className, children }) {
